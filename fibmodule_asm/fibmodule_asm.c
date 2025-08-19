@@ -38,7 +38,7 @@ static unsigned long fib_asm_impl(unsigned long n) {
 // Python wrapper: fib(n: int) -> int
 static PyObject* py_fib_asm(PyObject* self, PyObject* args) {
     unsigned long n;
-    if (!PyArg_ParseTuple(args, "k", &n)) {  // "k" parses unsigned long
+    if (!PyArg_ParseTuple(args, "k", &n)) {
         return NULL;
     }
     unsigned long result = fib_asm_impl(n);

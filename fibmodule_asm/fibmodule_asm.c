@@ -13,26 +13,26 @@ static inline unsigned long add_ul(unsigned long a, unsigned long b) {
     unsigned long res;
     __asm__ volatile (
         "add %0, %1, %2\n\t"
-        : "=r"(res)         // output
-        : "r"(a), "r"(b)    // inputs
-        : /* no clobbers */
+        : "=r"(res)
+        : "r"(a), "r"(b)
+        : 
     );
-    return res;
+    volatile unsigned long sink = res; // prevent optimization
+    return sink;
 #else
-    // Fallback for non-ARM64 compilers/hosts
     return a + b;
 #endif
 }
 
 // Iterative Fibonacci using inline-asm add
-static unsigned long fib_asm_impl(unsigned long n) {
-    unsigned long a = 0, b = 1;
+__attribute__((noinline)) static unsigned long fib_asm_impl(unsigned long n) {
+    volatile unsigned long a = 0, b = 1; // volatile forces actual memory operations
     for (unsigned long i = 0; i < n; ++i) {
-        unsigned long tmp = add_ul(a, b);
+        volatile unsigned long tmp = add_ul(a, b);
         a = b;
         b = tmp;
     }
-    return a;
+    return b;
 }
 
 // Python wrapper: fib(n: int) -> int

@@ -30,12 +30,21 @@ def benchmark(func, n, label):
     print(f"{label}: fib({n}) = {result}, time = {elapsed:.6f} sec")
 
 if __name__ == "__main__":
-    n = 40
+    # n = 30
+    #
+    # benchmark(py_fib, n, "Pure Python")
+    # benchmark(fib.fib, n, "C extension")
+    # benchmark(fibasm.fib, n, "C asm extension")
+    # benchmark(nb_fib, 1, "Numba JIT (first run, includes compile time)")
+    # benchmark(nb_fib, n, "Numba JIT (second run, cached)")
+    # benchmark(nb_fib, 1, "Numba JIT iterative (first run, includes compile time)")
+    # benchmark(nb_fib, n, "Numba JIT iterative (second run, cached)")
+    #
 
-    benchmark(py_fib, n, "Pure Python")
-    benchmark(fib.fib, n, "C extension")
+    # assembly version is just noise. Lets compare the assembly version
+    # with the pure C version on a larger n
+
+    n = int(input("Enter n: "))
+
     benchmark(fibasm.fib, n, "C asm extension")
-    benchmark(nb_fib, 1, "Numba JIT (first run, includes compile time)")
-    benchmark(nb_fib, n, "Numba JIT (second run, cached)")
-    benchmark(nb_fib, 1, "Numba JIT iterative (first run, includes compile time)")
-    benchmark(nb_fib, n, "Numba JIT iterative (second run, cached)")
+    benchmark(fib.fib, n, "C extension")
